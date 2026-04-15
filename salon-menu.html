@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe Studio — Services & Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --charcoal: #2a2520;
+    --brown: #6b5344;
+    --muted: #9c8878;
+    --card-bg: #fffdf9;
+    --border: #ede5d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  /* Hero Header */
+  .hero {
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+    padding: 52px 24px 44px;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 0%, rgba(201,169,110,0.18) 0%, transparent 65%),
+                radial-gradient(ellipse at 10% 100%, rgba(201,169,110,0.10) 0%, transparent 50%);
+  }
+
+  .hero-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hero-ornament::before,
+  .hero-ornament::after {
+    content: '';
+    height: 1px;
+    width: 40px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 9vw, 58px);
+    font-weight: 300;
+    color: var(--warm-white);
+    line-height: 1.1;
+    position: relative;
+    letter-spacing: 0.02em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+
+  /* Search */
+  .search-wrap {
+    padding: 28px 20px 0;
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    padding: 0 20px;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(42,37,32,0.07);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-box:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 4px 24px rgba(201,169,110,0.18);
+  }
+
+  .search-icon {
+    color: var(--gold);
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--charcoal);
+    padding: 15px 0;
+  }
+
+  .search-box input::placeholder { color: var(--muted); }
+
+  .clear-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    padding: 0;
+    display: none;
+  }
+
+  /* Result count */
+  .result-meta {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+    min-height: 18px;
+  }
+
+  /* Category filters */
+  .filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 20px 20px 4px;
+    max-width: 560px;
+    margin: 0 auto;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+
+  .filter-chip {
+    flex-shrink: 0;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    border-radius: 50px;
+    padding: 7px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.02em;
+  }
+
+  .filter-chip:hover { border-color: var(--gold); color: var(--brown); }
+  .filter-chip.active {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--gold-light);
+  }
+
+  /* Content */
+  .content {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* Category section */
+  .category-section { margin-bottom: 36px; }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
+
+  .category-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--charcoal);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .category-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--charcoal);
+    letter-spacing: 0.02em;
+  }
+
+  .category-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Service cards */
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: fadeIn 0.3s ease both;
+  }
+
+  .service-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(42,37,32,0.08);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .service-info { flex: 1; min-width: 0; }
+
+  .service-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 3px;
+  }
+
+  .service-name mark {
+    background: rgba(201,169,110,0.25);
+    border-radius: 3px;
+    padding: 0 2px;
+    color: inherit;
+  }
+
+  .service-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .service-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--brown);
+    background: rgba(107,83,68,0.08);
+    border-radius: 20px;
+    padding: 2px 8px;
+    margin-top: 6px;
+  }
+
+  .service-price-block { text-align: right; flex-shrink: 0; }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+
+  .service-price span {
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .price-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* Popular badge */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--charcoal);
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-weight: 500;
+    margin-left: 7px;
+    vertical-align: middle;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    display: none;
+  }
+
+  .empty-state .icon { font-size: 40px; margin-bottom: 14px; }
+  .empty-state h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+  }
+  .empty-state p { font-size: 13px; color: var(--muted); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+
+  .footer strong { color: var(--brown); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-ornament">Est. 2018</div>
+  <h1>Luxe <em>Studio</em></h1>
+  <p class="hero-sub">Services & Transparent Pricing</p>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search services (e.g. haircut, facial…)" autocomplete="off">
+    <button class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="result-meta" id="resultMeta"></div>
+</div>
+
+<div class="filters" id="filterBar">
+  <button class="filter-chip active" onclick="filterCategory('all', this)">All Services</button>
+  <button class="filter-chip" onclick="filterCategory('hair', this)">💇 Hair</button>
+  <button class="filter-chip" onclick="filterCategory('color', this)">🎨 Color</button>
+  <button class="filter-chip" onclick="filterCategory('skin', this)">✨ Skin</button>
+  <button class="filter-chip" onclick="filterCategory('nails', this)">💅 Nails</button>
+  <button class="filter-chip" onclick="filterCategory('spa', this)">🌿 Spa</button>
+</div>
+
+<div class="content" id="mainContent">
+  <!-- Rendered by JS -->
+</div>
+
+<div class="empty-state" id="emptyState">
+  <div class="icon">🔎</div>
+  <h3>No services found</h3>
+  <p>Try a different keyword or browse all categories</p>
+</div>
+
+<div class="footer">
+  <strong>Luxe Studio</strong> · 📍 123 Main Street · 📞 (555) 012-3456<br>
+  <span style="margin-top:4px;display:block">Walk-ins welcome · Appointments preferred</span>
+</div>
+
+<script>
+const services = [
+  // HAIR
+  { cat: 'hair', name: "Women's Haircut & Style", desc: "Shampoo, precision cut, blowdry & style", price: 65, duration: "60 min", popular: true },
+  { cat: 'hair', name: "Men's Haircut", desc: "Classic cut, shampoo & finish", price: 35, duration: "30 min", popular: true },
+  { cat: 'hair', name: "Children's Haircut", desc: "Ages 12 and under", price: 25, duration: "25 min" },
+  { cat: 'hair', name: "Blowout & Style", desc: "Shampoo, blowdry, and finish styling", price: 45, duration: "45 min" },
+  { cat: 'hair', name: "Deep Conditioning Treatment", desc: "Nourishing mask + scalp massage", price: 30, duration: "30 min" },
+  { cat: 'hair', name: "Keratin Smoothing", desc: "Frizz reduction, smooth finish lasts 3–4 months", price: 180, duration: "2.5 hr", note: "Starts from" },
+  { cat: 'hair', name: "Bridal Updo", desc: "Consultation + trial + wedding day styling", price: 120, duration: "90 min", popular: true },
+
+  // COLOR
+  { cat: 'color', name: "Single Process Color", desc: "Full root-to-tip application, one shade", price: 85, duration: "90 min" },
+  { cat: 'color', name: "Highlights — Partial", desc: "Face-framing or crown highlights", price: 95, duration: "90 min" },
+  { cat: 'color', name: "Highlights — Full", desc: "All-over highlights or lowlights", price: 130, duration: "2 hr" },
+  { cat: 'color', name: "Balayage", desc: "Hand-painted, sun-kissed natural color effect", price: 150, duration: "2.5 hr", popular: true, note: "Starts from" },
+  { cat: 'color', name: "Toner / Gloss", desc: "Tone correction or shine gloss treatment", price: 45, duration: "30 min" },
+  { cat: 'color', name: "Color Correction", desc: "Complex color repairs — quote at consultation", price: 200, duration: "3+ hr", note: "Starts from" },
+
+  // SKIN
+  { cat: 'skin', name: "Classic Facial", desc: "Deep cleanse, exfoliation, mask & moisturize", price: 70, duration: "60 min", popular: true },
+  { cat: 'skin', name: "Anti-Aging Facial", desc: "Peptide infusion, firming & lifting treatment", price: 95, duration: "75 min" },
+  { cat: 'skin', name: "Brightening Facial", desc: "Vitamin C & enzyme peel for radiant skin", price: 85, duration: "60 min" },
+  { cat: 'skin', name: "Eyebrow Shaping", desc: "Wax or thread with tint option", price: 22, duration: "20 min" },
+  { cat: 'skin', name: "Eyelash Tint", desc: "Semi-permanent lash tinting", price: 28, duration: "20 min" },
+  { cat: 'skin', name: "Full Face Wax", desc: "Brows, lip, chin & cheeks", price: 55, duration: "40 min" },
+
+  // NAILS
+  { cat: 'nails', name: "Classic Manicure", desc: "Shape, cuticle care & polish", price: 28, duration: "30 min" },
+  { cat: 'nails', name: "Gel Manicure", desc: "Gel polish — long-lasting up to 3 weeks", price: 42, duration: "45 min", popular: true },
+  { cat: 'nails', name: "Classic Pedicure", desc: "Soak, scrub, shape & polish", price: 38, duration: "45 min" },
+  { cat: 'nails', name: "Luxury Pedicure", desc: "Extended massage, mask & paraffin treatment", price: 58, duration: "60 min" },
+  { cat: 'nails', name: "Nail Extensions (Acrylic)", desc: "Full set with shape & polish", price: 65, duration: "75 min", note: "Starts from" },
+  { cat: 'nails', name: "Nail Art", desc: "Custom designs — per nail or full set", price: 15, duration: "Varies", note: "Per nail" },
+
+  // SPA
+  { cat: 'spa', name: "Swedish Massage", desc: "Relaxing full-body massage", price: 80, duration: "60 min", popular: true },
+  { cat: 'spa', name: "Deep Tissue Massage", desc: "Targeted muscle tension relief", price: 95, duration: "60 min" },
+  { cat: 'spa', name: "Hot Stone Massage", desc: "Heated basalt stones + therapeutic massage", price: 110, duration: "75 min" },
+  { cat: 'spa', name: "Scalp Massage", desc: "Tension-relieving scalp & neck treatment", price: 35, duration: "30 min" },
+  { cat: 'spa', name: "Aromatherapy Add-on", desc: "Essential oil blend enhancement", price: 15, duration: "+15 min" },
+];
+
+const catMeta = {
+  hair: { label: 'Hair Services', icon: '💇' },
+  color: { label: 'Color & Treatments', icon: '🎨' },
+  skin: { label: 'Skin & Beauty', icon: '✨' },
+  nails: { label: 'Nails', icon: '💅' },
+  spa: { label: 'Spa & Wellness', icon: '🌿' },
+};
+
+let activeCategory = 'all';
+let searchQuery = '';
+
+function highlight(text, query) {
+  if (!query) return text;
+  const re = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function render() {
+  const q = searchQuery.toLowerCase().trim();
+  const content = document.getElementById('mainContent');
+  const empty = document.getElementById('emptyState');
+  const meta = document.getElementById('resultMeta');
+
+  let filtered = services.filter(s => {
+    const matchCat = activeCategory === 'all' || s.cat === activeCategory;
+    const matchQ = !q || s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if (q) {
+    meta.textContent = `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for "${searchQuery}"`;
+  } else {
+    meta.textContent = '';
+  }
+
+  if (filtered.length === 0) {
+    content.innerHTML = '';
+    content.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  content.style.display = 'block';
+  empty.style.display = 'none';
+
+  const grouped = {};
+  filtered.forEach(s => {
+    if (!grouped[s.cat]) grouped[s.cat] = [];
+    grouped[s.cat].push(s);
+  });
+
+  const catOrder = ['hair', 'color', 'skin', 'nails', 'spa'];
+  let html = '';
+
+  catOrder.forEach(cat => {
+    if (!grouped[cat]) return;
+    const meta = catMeta[cat];
+    html += `<div class="category-section" data-cat="${cat}">
+      <div class="category-header">
+        <div class="category-icon">${meta.icon}</div>
+        <div class="category-title">${meta.label}</div>
+        <div class="category-line"></div>
+      </div>`;
+
+    grouped[cat].forEach((s, i) => {
+      html += `<div class="service-card" style="animation-delay:${i * 0.04}s">
+        <div class="service-info">
+          <div class="service-name">${highlight(s.name, q)}${s.popular ? '<span class="badge">Popular</span>' : ''}</div>
+          <div class="service-desc">${highlight(s.desc, q)}</div>
+          <div class="service-duration">⏱ ${s.duration}</div>
+        </div>
+        <div class="service-price-block">
+          <div class="service-price"><span>$</span>${s.price}</div>
+          ${s.note ? `<div class="price-note">${s.note}</div>` : ''}
+        </div>
+      </div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  content.innerHTML = html;
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value;
+  document.getElementById('clearBtn').style.display = this.value ? 'block' : 'none';
+  render();
+});
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearBtn').style.display = 'none';
+  searchQuery = '';
+  render();
+}
+
+function filterCategory(cat, el) {
+  activeCategory = cat;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
